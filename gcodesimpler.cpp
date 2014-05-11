@@ -159,7 +159,7 @@ void GCodeSimpler::processGCode(QString filepath)
     QStringList::const_iterator it;
     for (it = outList.begin();it != outList.end();++it)
     {
-        outStream << *it;
+        outStream << *it << endl;
     }
 
     inFile.close();
