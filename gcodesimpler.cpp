@@ -40,7 +40,8 @@ const QString GCodeSimpler::simplify(const QString &reference)
             {
                 //do extraction
                 data = list.at(i);
-                char c = data.at(0).toLower().toAscii();
+                //char c = data.at(0).toLower().toAscii();
+                char c = data.at(0).toLower().toLatin1();
                 switch (c)
                 {
                 case 'x':
