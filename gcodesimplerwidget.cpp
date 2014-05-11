@@ -47,10 +47,8 @@ GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
 
 GCodeSimplerWidget::~GCodeSimplerWidget()
 {
-    //if (worker.isRunning())
-        //worker.quit();
     worker.quit();
-    //worker.terminate();
+    worker.wait();
 }
 
 void GCodeSimplerWidget::ready()
@@ -74,8 +72,8 @@ void GCodeSimplerWidget::finished(bool status, QString message)
     if (status)
     {
         //notify
-        infoLabel.setText(QString("Destination: %1").arg(message));
-        statusLabel.setText(QString("<h3 align=center>%1</h3>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder")));
+        infoLabel.setText(tr("Destination: %1").arg(message));
+        statusLabel.setText(t("<h3 align=center>%1</h3>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder")));
         //ready
         QTimer::singleShot(notifyDelay * 2,this,SLOT(ready()));
     }
@@ -100,7 +98,7 @@ void GCodeSimplerWidget::dragEnterEvent(QDragEnterEvent *e)
         if (urls.count() > 1)
             infoLabel.setText(tr("Multiple files is not supported."));
         else
-            infoLabel.setText(QString("Filepath: %1.").arg(urls.front().toLocalFile()));
+            infoLabel.setText(tr("Filepath: %1.").arg(urls.front().toLocalFile()));
     }
     e->acceptProposedAction();
 }
@@ -146,5 +144,5 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
 
 void GCodeSimplerWidget::showAbout()
 {
-    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<a href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/"));
+    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1\t%4</h1>\n<a href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("1.0"));
 }
