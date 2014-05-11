@@ -12,7 +12,7 @@
 #include <QStyle>
 #include <QApplication>
 
-static const quint16 notifyDelay = 5000;
+static const quint16 notifyDelay = 1000;
 
 GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     : QWidget(parent)
