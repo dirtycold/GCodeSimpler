@@ -49,7 +49,8 @@ GCodeSimplerWidget::~GCodeSimplerWidget()
 {
     //if (worker.isRunning())
         //worker.quit();
-    worker.terminate();
+    worker.quit();
+    //worker.terminate();
 }
 
 void GCodeSimplerWidget::ready()
