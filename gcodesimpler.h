@@ -19,14 +19,17 @@ public slots:
     void processGCode(QString filepath);
     void clearPosition();
 
+private slots:
+    void processLayerChange(QStringList &outList, QStringList &list);
+
 private:
-    //QString gCodeFilePath;
-    //QString xj3dpFilePath;
     double x,y,z,e,f;
     double last_z;
+    double ref_z;
     int data_count;
     int layer_count;
-    //int total_layers;
+    bool first;
+    bool z_ground;
 
 };
 

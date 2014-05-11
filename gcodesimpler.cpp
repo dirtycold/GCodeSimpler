@@ -52,6 +52,13 @@ const QString GCodeSimpler::simplify(const QString &reference)
                     break;
                 case 'z':
                     z=data.remove(0,1).toDouble();
+                    if (z_ground)
+                    {
+                        ref_z = z;
+                        z_ground = false;
+                    }
+                    //qDebug() << ref_z;
+                    z -= ref_z;
                     break;
                 case 'e':
                     e=data.remove(0,1).toDouble();
@@ -60,6 +67,7 @@ const QString GCodeSimpler::simplify(const QString &reference)
                     f=data.remove(0,1).toDouble()/60;
                     break;
                 }
+
                 if (z<zRange)
                     line = QString("%1 %2 %3 %4 %5").arg(QString::number(x,'f',prec)).arg(QString::number(y,'f',prec)).arg(QString::number(z,'f',prec)).arg(QString::number(f,'f',prec)).arg(QString::number(e,'f',prec));
                 //outStream << outLine << endl;
@@ -101,42 +109,30 @@ void GCodeSimpler::processGCode(QString filepath)
     QStringList outList;
     QStringList layerList;
 
-    QString line;
     QString data;
 
-    layer_count = 0;
-    data_count = 0;
-    bool first = true;
     clearPosition();
+
+    // ugly code below
+    // process gcode
 
     while (!inStream.atEnd())
     {
         inLine = inStream.readLine();
         if (inLine.contains("(") || inLine.contains(";") ||inLine.isEmpty())
             continue;
-        line = simplify(inLine);
-        if (!line.isEmpty())
+        data = simplify(inLine);
+        if (!data.isEmpty())
         {
-            data = line;
-            //actural line
+            //data = line;
             if ((z!=last_z) && (!first))
             {
                 //layer change
-                    //layer++
-
-                line = QString("%1").arg(QString::number(data_count));
-                layerList.prepend(line);
-                line = QString("layer %1 seg 1").arg(QString::number(layer_count));
-                layerList.prepend(line);
-                outList<<layerList;
-                layerList.clear();
-
+                processLayerChange(outList, layerList);
                 data_count = 0;
                 layer_count++;
-                //total_layers++;
-                //layer_count=0;
-                //last_z=z;
             }
+
             data_count++;
             layerList.append(data);
             last_z = z;
@@ -144,23 +140,23 @@ void GCodeSimpler::processGCode(QString filepath)
         }
              //outStream << line << endl;
     }
+
     //process last layer
-    line = QString("%1").arg(QString::number(data_count));
-    layerList.prepend(line);
-    line = QString("layer %1 seg 1").arg(QString::number(layer_count));
-    layerList.prepend(line);
-    outList << layerList;
-    layerList.clear();
+    processLayerChange(outList, layerList);
+
     // no layer_count++ at the very end so we do it right away
-    line =  QString("layers=%1").arg(QString::number(layer_count+1));
-    outList.prepend(line);
-    //outStream << outList;
+    data =  QString("layers=%1").arg(QString::number(layer_count+1));
+    outList.prepend(data);
+
+    //write to file
     //foreach is slow
     QStringList::const_iterator it;
     for (it = outList.begin();it != outList.end();++it)
     {
         outStream << *it << endl;
     }
+
+    //processing done.
 
     inFile.close();
     outFile.close();
@@ -169,5 +165,20 @@ void GCodeSimpler::processGCode(QString filepath)
 
 void GCodeSimpler::clearPosition()
 {
-    x=y=z=e=f=0;
+    x=y=z=e=f=last_z=ref_z=0;
+    layer_count=data_count=0;
+    first = true;
+    z_ground = true;
+}
+
+void GCodeSimpler::processLayerChange(QStringList &outList, QStringList &list)
+{
+    QString line;
+    line = QString("%1").arg(QString::number(data_count));
+    list.prepend(line);
+    line = QString("layer %1 seg 1").arg(QString::number(layer_count));
+    list.prepend(line);
+
+    outList << list;
+    list.clear();
 }
