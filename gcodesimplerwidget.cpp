@@ -54,14 +54,14 @@ GCodeSimplerWidget::~GCodeSimplerWidget()
 void GCodeSimplerWidget::ready()
 {
     infoLabel.setText(tr("Ready."));
-    statusLabel.setText(QString("<h3 align=center>%1</h3>").arg(tr("Drop GCode file here.")));
+    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Drop GCode file here.")));
     setAcceptDrops(true);
 }
 
 void GCodeSimplerWidget::busy()
 {
     setAcceptDrops(false);
-    statusLabel.setText(QString("<h3 align=center>%1</h3>").arg(tr("Processing GCode...")));
+    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Processing GCode...")));
 }
 
 void GCodeSimplerWidget::finished(bool status, QString message)
@@ -73,7 +73,7 @@ void GCodeSimplerWidget::finished(bool status, QString message)
     {
         //notify
         infoLabel.setText(tr("Destination: %1").arg(message));
-        statusLabel.setText(t("<h3 align=center>%1</h3>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder")));
+        statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder")));
         //ready
         QTimer::singleShot(notifyDelay * 2,this,SLOT(ready()));
     }
@@ -86,7 +86,7 @@ void GCodeSimplerWidget::finished(bool status, QString message)
 void GCodeSimplerWidget::error(QString message)
 {
     infoLabel.setText(message);
-    statusLabel.setText(QString("<h3 align=center>%1</h3>").arg(tr("Something wrong happens.")));
+    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Something wrong happens.")));
     QTimer::singleShot(notifyDelay,this,SLOT(ready()));
 }
 
@@ -144,5 +144,5 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
 
 void GCodeSimplerWidget::showAbout()
 {
-    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1\t%4</h1>\n<a href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("1.0"));
+    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("20140511"));
 }
