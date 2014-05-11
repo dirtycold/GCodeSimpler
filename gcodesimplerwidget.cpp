@@ -122,10 +122,8 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
         QString path = mimeData->urls().front().toLocalFile();
         QFile file(path);
         QFileInfo fileInfo(file);
-        QDir dir = fileInfo.absoluteDir();
         QString suffix = fileInfo.completeSuffix();
-        QFileInfo dirInfo(dir.path());
-        if (dirInfo.isWritable() && suffix.toLower() == "gcode")
+        if (suffix.toLower() == "gcode")
         {
             //QMessageBox::information(this,"Accepted File",fileInfo.absoluteFilePath());
             //infoLabel.setText(QString("Processing %1").arg(fileInfo.absoluteFilePath()));
