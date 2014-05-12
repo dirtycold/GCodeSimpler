@@ -68,11 +68,9 @@ const QString GCodeSimpler::simplify(const QString &reference)
                     f=data.remove(0,1).toDouble()/60;
                     break;
                 }
-
-                if (z<zRange)
-                    line = QString("%1 %2 %3 %4 %5").arg(QString::number(x,'f',prec)).arg(QString::number(y,'f',prec)).arg(QString::number(z,'f',prec)).arg(QString::number(f,'f',prec)).arg(QString::number(e,'f',prec));
-                //outStream << outLine << endl;
             }
+            if (z<zRange)
+                line = QString("%1 %2 %3 %4 %5").arg(QString::number(x,'f',prec)).arg(QString::number(y,'f',prec)).arg(QString::number(z,'f',prec)).arg(QString::number(f,'f',prec)).arg(QString::number(e,'f',prec));
         }
     }
  
