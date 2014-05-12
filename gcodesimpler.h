@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+static const QString outSuffix = "xj3dp1";
+
 class GCodeSimpler : public QObject
 {
     Q_OBJECT

@@ -5,8 +5,6 @@
 #include <QChar>
 #include <QtDebug>
 
-static const QString outSuffix = "xj3dp1";
-static const QString movementIndentifier= "G1";
 static const quint8 prec = 3;
 static const double zRange = 120;
 
