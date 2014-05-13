@@ -142,5 +142,5 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
 
 void GCodeSimplerWidget::showAbout()
 {
-    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("20140511"));
+    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("v1.0 (20140513)"));
 }

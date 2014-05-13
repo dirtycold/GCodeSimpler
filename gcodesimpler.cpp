@@ -81,17 +81,23 @@ void GCodeSimpler::processGCode(QString filepath)
     QFile inFile(gCodeFilePath);
     if (!inFile.open(QIODevice::Text | QIODevice::ReadOnly))
         return finished(false,tr("Source file not accessible."));
+
     QFileInfo inFileInfo(inFile);
     QDir dir = inFileInfo.absoluteDir();
     QFileInfo inDirInfo(dir.path());
     if (!inDirInfo.isWritable())
         return finished(false,tr("Target folder not writable."));
+
     QDir::setCurrent(dir.path());
     QString xj3dpFilePath = QString("%1.%2").arg(inFileInfo.baseName()).arg(outSuffix);
     QFile outFile(xj3dpFilePath);
     QFileInfo outFileInfo(outFile);
+
+    // NOTE: this will overwrite existing file
+    // TODO: need a auto renaming solution
 //    if (outFile.exists())
 //        return finished(false,"Target file exists.");
+
     if (!outFile.open(QIODevice::Text | QIODevice::WriteOnly))
         return finished(false,tr("Target file not writable."));
 
@@ -112,6 +118,8 @@ void GCodeSimpler::processGCode(QString filepath)
 
     // ugly code below
     // process gcode
+
+    //TODO: refer to any GCode Parsing Library
 
     while (!inStream.atEnd())
     {
