@@ -6,7 +6,6 @@
 #include <QtDebug>
 
 static const quint8 prec = 3;
-static const double zRange = 120;
 
 GCodeSimpler::GCodeSimpler(QObject *parent) :
     QObject(parent)
@@ -67,8 +66,7 @@ const QString GCodeSimpler::simplify(const QString &reference)
                     break;
                 }
             }
-            if (z<zRange)
-                line = QString("%1 %2 %3 %4 %5").arg(QString::number(x,'f',prec)).arg(QString::number(y,'f',prec)).arg(QString::number(z,'f',prec)).arg(QString::number(f,'f',prec)).arg(QString::number(e,'f',prec));
+            line = QString("%1 %2 %3 %4 %5").arg(QString::number(x,'f',prec)).arg(QString::number(y,'f',prec)).arg(QString::number(z,'f',prec)).arg(QString::number(f,'f',prec)).arg(QString::number(e,'f',prec));
         }
     }
  
