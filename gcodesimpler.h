@@ -13,7 +13,7 @@ public:
     const QString simplify(const QString & reference);
 
 signals:
-    void processing();
+    void processing(QString filepath);
     void finished(bool status, QString filepath);
 
 

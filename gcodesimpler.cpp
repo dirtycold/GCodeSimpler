@@ -102,7 +102,7 @@ void GCodeSimpler::processGCode(QString filepath)
         return finished(false,tr("Target file not writable."));
 
     //everything seems ready.
-    emit processing();
+    emit processing(inFileInfo.absoluteFilePath());
 
     QTextStream inStream(&inFile);
     QTextStream outStream(&outFile);

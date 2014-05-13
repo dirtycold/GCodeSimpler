@@ -25,7 +25,7 @@ signals:
 
 public slots:
     void ready();
-    void busy();
+    void busy(QString filepath);
     void finished(bool status, QString message);
     void error(QString message);
 

@@ -38,7 +38,7 @@ GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     worker.start();
 
     connect(this,SIGNAL(fileAccepted(QString)),&gCodeSimpler,SLOT(processGCode(QString)));
-    connect(&gCodeSimpler,SIGNAL(processing()),this,SLOT(busy()));
+    connect(&gCodeSimpler,SIGNAL(processing(QString)),this,SLOT(busy(QString)));
     connect(&gCodeSimpler,SIGNAL(finished(bool,QString)),this,SLOT(finished(bool,QString)));
     connect(&aboutButton,SIGNAL(clicked()),this,SLOT(showAbout()));
 
@@ -58,10 +58,11 @@ void GCodeSimplerWidget::ready()
     setAcceptDrops(true);
 }
 
-void GCodeSimplerWidget::busy()
+void GCodeSimplerWidget::busy(QString filepath)
 {
     setAcceptDrops(false);
     statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Processing GCode...")));
+    infoLabel.setText(tr("Filepath: %1.").arg(filepath));
 }
 
 void GCodeSimplerWidget::finished(bool status, QString message)
