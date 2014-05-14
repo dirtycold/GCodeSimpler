@@ -8,6 +8,29 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load("GCodeSimpler_zh_CN.qm");
     a.installTranslator(&translator);
+
+    // if some arguments given
+    if (argc > 1)
+    {
+        if (argc == 3)
+        {
+            QString option(argv[1]);
+            if (option == "-c" || option == "--convert")
+            {
+                QString filepath(argv[2]);
+                GCodeSimpler simpler;
+                simpler.processGCode(filepath);
+                return 0;
+            }
+        }
+
+        //TODO: any better solution to write string to console?
+        QString helpMessage = QObject::tr("\nGCodeSimpler\n(C)2014 Shaanxi Hengtong\n=======================\n\nUsage: GcodeSimpler [OPTION] [FILE]\nOptions:\n--help\t\t\t-h\t\tDisplay this help\n--convert <filepath>\t-c <filepath>\tProcess GCode file\n");
+        GCodeSimpler::consoleWrite(helpMessage);
+        return 1;
+    }
+
+    // if no extra arguments given, then show the GUI.
     GCodeSimplerWidget w;
     w.show();
 

@@ -58,14 +58,14 @@ void GCodeSimplerWidget::ready()
     setAcceptDrops(true);
 }
 
-void GCodeSimplerWidget::busy(QString filepath)
+void GCodeSimplerWidget::busy(const QString &filepath)
 {
     setAcceptDrops(false);
     statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Processing GCode...")));
     infoLabel.setText(tr("Filepath: %1.").arg(filepath));
 }
 
-void GCodeSimplerWidget::finished(bool status, QString message)
+void GCodeSimplerWidget::finished(bool status, const QString &message)
 {
     // if true message is the output file path.
     // else it would be error message
@@ -74,7 +74,7 @@ void GCodeSimplerWidget::finished(bool status, QString message)
     {
         //notify
         infoLabel.setText(tr("Destination: %1").arg(message));
-        statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder")));
+        statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder.")));
         //ready
         QTimer::singleShot(notifyDelay * 2,this,SLOT(ready()));
     }
@@ -121,19 +121,7 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
     if (mimeData->hasUrls())
     {
         QString path = mimeData->urls().front().toLocalFile();
-        QFile file(path);
-        QFileInfo fileInfo(file);
-        QString suffix = fileInfo.completeSuffix();
-        if (suffix.toLower() == "gcode")
-        {
-            //QMessageBox::information(this,"Accepted File",fileInfo.absoluteFilePath());
-            //infoLabel.setText(QString("Processing %1").arg(fileInfo.absoluteFilePath()));
-            emit fileAccepted(fileInfo.absoluteFilePath());
-        }
-        else
-        {
-            error(tr("Not a GCode file."));
-        }
+        emit fileAccepted(path);
     }
     else
     {
@@ -143,5 +131,5 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
 
 void GCodeSimplerWidget::showAbout()
 {
-    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("Shaanxi Hengtong (C)2014")).arg("http://www.china-rpm.com/").arg("v1.0 (20140513)"));
+    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("(C)2014 Shaanxi Hengtong ")).arg("http://www.china-rpm.com/").arg("v1.0 (20140513)"));
 }

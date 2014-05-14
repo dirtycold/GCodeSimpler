@@ -3,7 +3,6 @@
 #include <QDir>
 #include <QTextStream>
 #include <QChar>
-#include <QtDebug>
 
 static const quint8 prec = 3;
 
@@ -73,18 +72,32 @@ const QString GCodeSimpler::simplify(const QString &reference)
     return line;
 }
 
-void GCodeSimpler::processGCode(QString filepath)
+void GCodeSimpler::processGCode(const QString &filepath)
 {
     QString gCodeFilePath = filepath;
+    consoleWrite(tr("Source file: %1").arg(gCodeFilePath));
+
     QFile inFile(gCodeFilePath);
     if (!inFile.open(QIODevice::Text | QIODevice::ReadOnly))
+    {
+        consoleWrite(tr("Source file not accessible."));
         return finished(false,tr("Source file not accessible."));
+    }
 
     QFileInfo inFileInfo(inFile);
+    if (inFileInfo.completeSuffix() != inSuffix)
+    {
+        consoleWrite(tr("Not a GCode file."));
+        return finished(false,tr("Not a GCode file."));
+    }
+
     QDir dir = inFileInfo.absoluteDir();
     QFileInfo inDirInfo(dir.path());
     if (!inDirInfo.isWritable())
+    {
+        consoleWrite(tr("Target folder not writable."));
         return finished(false,tr("Target folder not writable."));
+    }
 
     QDir::setCurrent(dir.path());
     QString xj3dpFilePath = QString("%1.%2").arg(inFileInfo.baseName()).arg(outSuffix);
@@ -97,9 +110,13 @@ void GCodeSimpler::processGCode(QString filepath)
 //        return finished(false,"Target file exists.");
 
     if (!outFile.open(QIODevice::Text | QIODevice::WriteOnly))
+    {
+        consoleWrite(tr("Target file not writable."));
         return finished(false,tr("Target file not writable."));
+    }
 
     //everything seems ready.
+    consoleWrite(tr("Processing GCode..."));
     emit processing(inFileInfo.absoluteFilePath());
 
     QTextStream inStream(&inFile);
@@ -163,6 +180,7 @@ void GCodeSimpler::processGCode(QString filepath)
 
     inFile.close();
     outFile.close();
+    consoleWrite(tr("GCode processing complete."));
     emit finished(true,outFileInfo.absoluteFilePath());
 }
 
@@ -184,4 +202,11 @@ void GCodeSimpler::processLayerChange(QStringList &outList, QStringList &list)
 
     outList << list;
     list.clear();
+}
+
+void GCodeSimpler::consoleWrite(const QString & message)
+{
+    //qDebug("%s",string.toStdString().c_str());
+    QTextStream out(stdout);
+    out << message << endl;
 }
