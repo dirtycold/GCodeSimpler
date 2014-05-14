@@ -12,8 +12,6 @@ TARGET = GCodeSimpler
 TEMPLATE = app
 TRANSLATIONS += GCodeSimpler.ts
 
-CONFIG += console
-
 SOURCES += main.cpp\
         gcodesimplerwidget.cpp \
     gcodesimpler.cpp
