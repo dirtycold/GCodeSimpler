@@ -109,7 +109,7 @@ void GCodeSimpler::processGCode(const QString &filepath)
 //    if (outFile.exists())
 //        return finished(false,"Target file exists.");
 
-    if (!outFile.open(QIODevice::Text | QIODevice::WriteOnly))
+    if (!outFile.open(/*QIODevice::Text | */QIODevice::WriteOnly))
     {
         consoleWrite(tr("Target file not writable."));
         return finished(false,tr("Target file not writable."));
