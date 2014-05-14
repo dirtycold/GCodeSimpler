@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+static const QString inSuffix  = "gcode";
 static const QString outSuffix = "xj3dp1";
 
 class GCodeSimpler : public QObject
@@ -12,13 +13,15 @@ public:
     explicit GCodeSimpler(QObject *parent = 0);
     const QString simplify(const QString & reference);
 
+    static void consoleWrite(const QString & message);
+
 signals:
-    void processing(QString filepath);
-    void finished(bool status, QString filepath);
+    void processing(const QString & filepath);
+    void finished(bool status, const QString & filepath);
 
 
 public slots:
-    void processGCode(QString filepath);
+    void processGCode(const QString & filepath);
     void clearPosition();
 
 private slots:

@@ -21,12 +21,12 @@ public:
     ~GCodeSimplerWidget();
 
 signals:
-    void fileAccepted(QString filepath);
+    void fileAccepted(const QString & filepath);
 
 public slots:
     void ready();
-    void busy(QString filepath);
-    void finished(bool status, QString message);
+    void busy(const QString & filepath);
+    void finished(bool status, const QString & message);
     void error(QString message);
 
 protected:
