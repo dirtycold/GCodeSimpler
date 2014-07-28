@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
     translator.load("GCodeSimpler_zh_CN.qm");
     a.installTranslator(&translator);
 
-    // if some arguments given
+	QString titleMessage = QObject::tr("\nGCodeSimpler\n(C)2014 Shaanxi Hengtong\n");
+	GCodeSimpler::consoleWrite(titleMessage);
+	// if some arguments given
     if (argc > 1)
     {
         if (argc == 3)
@@ -25,7 +27,7 @@ int main(int argc, char *argv[])
         }
 
         //TODO: any better solution to write string to console?
-        QString helpMessage = QObject::tr("\nGCodeSimpler\n(C)2014 Shaanxi Hengtong\n=======================\n\nUsage: GcodeSimpler [OPTION] [FILE]\nOptions:\n--help\t\t\t-h\t\tDisplay this help\n--convert <filepath>\t-c <filepath>\tProcess GCode file\n");
+		QString helpMessage = QObject::tr("=======================\n\nUsage: GcodeSimpler [OPTION] [FILE]\nOptions:\n--help\t\t\t-h\t\tDisplay this help\n--convert <filepath>\t-c <filepath>\tProcess GCode file\n");
         GCodeSimpler::consoleWrite(helpMessage);
         return 1;
     }
