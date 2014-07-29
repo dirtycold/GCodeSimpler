@@ -12,14 +12,16 @@ int main(int argc, char *argv[])
     // if some arguments given
     if (argc > 1)
     {
-        if (argc == 3)
+        if (argc >= 3)
         {
             QString option(argv[1]);
             if (option == "-c" || option == "--convert")
             {
-                QString filepath(argv[2]);
+                QStringList filelist;
+                for (int i = 2; i < argc; ++i)
+                    filelist.append(QString(argv[i]));
                 GCodeSimpler simpler;
-                simpler.processGCode(filepath);
+                simpler.processGCode(filelist);
                 return 0;
             }
         }

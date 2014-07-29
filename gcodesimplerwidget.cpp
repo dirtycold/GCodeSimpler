@@ -11,7 +11,6 @@
 #include <QIcon>
 #include <QStyle>
 #include <QApplication>
-#include <QDateTime>
 
 static const quint16 notifyDelay = 1000;
 
@@ -26,7 +25,7 @@ GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
-    resize(360,360);
+    setFixedSize(400,360);
     infoLabel.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     aboutButton.setFixedSize(28,28);
     aboutButton.setFlat(true);
@@ -38,7 +37,7 @@ GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     gCodeSimpler.moveToThread(&worker);
     worker.start();
 
-    connect(this,SIGNAL(fileAccepted(QString)),&gCodeSimpler,SLOT(processGCode(QString)));
+    connect(this,SIGNAL(filesAccepted(QStringList)),&gCodeSimpler,SLOT(processGCode(QStringList)));
     connect(&gCodeSimpler,SIGNAL(processing(QString)),this,SLOT(busy(QString)));
     connect(&gCodeSimpler,SIGNAL(finished(bool,QString)),this,SLOT(finished(bool,QString)));
     connect(&aboutButton,SIGNAL(clicked()),this,SLOT(showAbout()));
@@ -55,14 +54,14 @@ GCodeSimplerWidget::~GCodeSimplerWidget()
 void GCodeSimplerWidget::ready()
 {
     infoLabel.setText(tr("Ready."));
-    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Drop GCode file here.")));
+    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Drag and drop GCode file(s) here.")));
     setAcceptDrops(true);
 }
 
 void GCodeSimplerWidget::busy(const QString &filepath)
 {
     setAcceptDrops(false);
-    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Processing GCode...")));
+    statusLabel.setText(QString("<h2 align=center>%1</h2>").arg(tr("Processing GCode file(s)...")));
     infoLabel.setText(tr("Filepath: %1.").arg(filepath));
 }
 
@@ -74,8 +73,8 @@ void GCodeSimplerWidget::finished(bool status, const QString &message)
     if (status)
     {
         //notify
-        infoLabel.setText(tr("Destination: %1").arg(message));
-        statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode processing complete.")).arg(tr("The output was in the same folder.")));
+        infoLabel.setText(message);
+        statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode file(s) processing complete.")).arg(tr("The output was in the same folder.")));
         //ready
         QTimer::singleShot(notifyDelay * 2,this,SLOT(ready()));
     }
@@ -97,10 +96,7 @@ void GCodeSimplerWidget::dragEnterEvent(QDragEnterEvent *e)
     QList<QUrl> urls = e->mimeData()->urls();
     if (!urls.isEmpty())
     {
-        if (urls.count() > 1)
-            infoLabel.setText(tr("Multiple files is not supported."));
-        else
-            infoLabel.setText(tr("Filepath: %1.").arg(urls.front().toLocalFile()));
+        infoLabel.setText(tr("Now drop Gcode file(s) here."));
     }
     e->acceptProposedAction();
 }
@@ -121,8 +117,12 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
     const QMimeData *mimeData = e->mimeData();
     if (mimeData->hasUrls())
     {
-        QString path = mimeData->urls().front().toLocalFile();
-        emit fileAccepted(path);
+        QStringList filelist;
+        QList<QUrl> urllist = mimeData->urls();
+        foreach (QUrl url, urllist) {
+            filelist.append(url.toLocalFile());
+        }
+        emit filesAccepted(filelist);
     }
     else
     {
@@ -133,5 +133,5 @@ void GCodeSimplerWidget::dropEvent(QDropEvent *e)
 void GCodeSimplerWidget::showAbout()
 {
     QString date = QString::fromLocal8Bit(__DATE__);
-    QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4 (%5)</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("(C)2014 Shaanxi Hengtong ")).arg("http://www.china-rpm.com/").arg("v1.0").arg(date));
+	QMessageBox::information(this,QString("%1 %2").arg(tr("About")).arg(windowTitle()),QString("<h1 align=center>%1</h1>\n<p align=center>%4 (%5)</p>\n<a align=center href=%3 align=center>%2</a>").arg(windowTitle()).arg(tr("2014(C) Shaanxi Hengtong ")).arg("http://www.china-rpm.com/").arg("v2.0").arg(date));
 }

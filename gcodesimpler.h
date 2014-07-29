@@ -14,6 +14,7 @@ public:
     const QString simplify(const QString & reference);
 
     static void consoleWrite(const QString & message);
+    void processingResult(bool status, const QString &message);
 
 signals:
     void processing(const QString & filepath);
@@ -21,7 +22,7 @@ signals:
 
 
 public slots:
-    void processGCode(const QString & filepath);
+    void processGCode(const QStringList &filelist);
     void clearPosition();
 
 private slots:

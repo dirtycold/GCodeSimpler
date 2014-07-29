@@ -4,43 +4,49 @@
 <context>
     <name>GCodeSimpler</name>
     <message>
-        <location filename="gcodesimpler.cpp" line="78"/>
+        <location filename="gcodesimpler.cpp" line="81"/>
         <source>Source file: %1</source>
         <translation>原文件：%1</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="83"/>
-        <location filename="gcodesimpler.cpp" line="84"/>
+        <location filename="gcodesimpler.cpp" line="86"/>
         <source>Source file not accessible.</source>
         <translation>无法读取原始文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="90"/>
-        <location filename="gcodesimpler.cpp" line="91"/>
+        <location filename="gcodesimpler.cpp" line="93"/>
         <source>Not a GCode file.</source>
         <translation>不是 GCode 文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="98"/>
-        <location filename="gcodesimpler.cpp" line="99"/>
+        <location filename="gcodesimpler.cpp" line="101"/>
         <source>Target folder not writable.</source>
         <translation>无法写入目标目录。</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="114"/>
-        <location filename="gcodesimpler.cpp" line="115"/>
+        <location filename="gcodesimpler.cpp" line="117"/>
+        <location filename="gcodesimpler.cpp" line="118"/>
         <source>Target file not writable.</source>
         <translation>无法写入目标文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="119"/>
+        <location filename="gcodesimpler.cpp" line="124"/>
         <source>Processing GCode...</source>
         <translation>正在转换…</translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="183"/>
+        <location filename="gcodesimpler.cpp" line="193"/>
+        <source>%1 GCode file(s) processing complete.</source>
+        <translation>已处理 %1 个 GCode 文件。</translation>
+    </message>
+    <message>
+        <location filename="gcodesimpler.cpp" line="197"/>
+        <source>No file processed.</source>
+        <translation>没有处理任何文件。</translation>
+    </message>
+    <message>
         <source>GCode processing complete.</source>
-        <translation>GCode 转换完毕。</translation>
+        <translation type="obsolete">GCode 转换完毕。</translation>
     </message>
 </context>
 <context>
@@ -57,23 +63,36 @@
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="57"/>
-        <source>Drop GCode file here.</source>
+        <source>Drag and drop GCode file(s) here.</source>
+        <oldsource>Drop GCode file here.</oldsource>
         <translation>将 GCode 文件拖放到这里。</translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="64"/>
-        <source>Processing GCode...</source>
-        <translation>正在转换…</translation>
+        <source>Processing GCode file(s)...</source>
+        <oldsource>Processing GCode files...</oldsource>
+        <translation>正在转换 GCode 文件…</translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="76"/>
+        <location filename="gcodesimplerwidget.cpp" line="99"/>
+        <source>Now drop Gcode file(s) here.</source>
+        <oldsource>Drop Gcode file(s) here.</oldsource>
+        <translation>现在释放 GCode 文件。</translation>
+    </message>
+    <message>
+        <location filename="gcodesimplerwidget.cpp" line="136"/>
+        <source>2014(C) Shaanxi Hengtong </source>
+        <translation>2014 陕西恒通智能机器有限公司 版权所有</translation>
+    </message>
+    <message>
         <source>Destination: %1</source>
-        <translation>输出文件路径：%1</translation>
+        <translation type="obsolete">输出文件路径：%1</translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="77"/>
-        <source>GCode processing complete.</source>
-        <translation>GCode 转换完毕。</translation>
+        <source>GCode file(s) processing complete.</source>
+        <oldsource>GCode processing complete.</oldsource>
+        <translation>GCode 文件转换完毕。</translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="77"/>
@@ -90,18 +109,15 @@
         <translation>出现错误。</translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="100"/>
         <source>Multiple files is not supported.</source>
-        <translation>不支持同时拖放多个文件。</translation>
+        <translation type="obsolete">不支持同时拖放多个文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="134"/>
         <source>(C)2014 Shaanxi Hengtong </source>
-        <translation>2014 陕西恒通智能机器有限公司 版权所有</translation>
+        <translation type="obsolete">2014 陕西恒通智能机器有限公司 版权所有</translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="65"/>
-        <location filename="gcodesimplerwidget.cpp" line="102"/>
         <source>Filepath: %1.</source>
         <translation>原文件路径：%1.</translation>
     </message>
@@ -110,12 +126,12 @@
         <translation type="obsolete">不是 GCode 文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="128"/>
+        <location filename="gcodesimplerwidget.cpp" line="129"/>
         <source>File not accessable.</source>
         <translation>无法访问文件。</translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="134"/>
+        <location filename="gcodesimplerwidget.cpp" line="136"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -127,7 +143,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="28"/>
+        <location filename="main.cpp" line="30"/>
         <source>
 GCodeSimpler
 (C)2014 Shaanxi Hengtong

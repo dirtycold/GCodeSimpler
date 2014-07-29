@@ -4,42 +4,44 @@
 <context>
     <name>GCodeSimpler</name>
     <message>
-        <location filename="gcodesimpler.cpp" line="78"/>
+        <location filename="gcodesimpler.cpp" line="81"/>
         <source>Source file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="83"/>
-        <location filename="gcodesimpler.cpp" line="84"/>
+        <location filename="gcodesimpler.cpp" line="86"/>
         <source>Source file not accessible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="90"/>
-        <location filename="gcodesimpler.cpp" line="91"/>
+        <location filename="gcodesimpler.cpp" line="93"/>
         <source>Not a GCode file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="98"/>
-        <location filename="gcodesimpler.cpp" line="99"/>
+        <location filename="gcodesimpler.cpp" line="101"/>
         <source>Target folder not writable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="114"/>
-        <location filename="gcodesimpler.cpp" line="115"/>
+        <location filename="gcodesimpler.cpp" line="117"/>
+        <location filename="gcodesimpler.cpp" line="118"/>
         <source>Target file not writable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="119"/>
+        <location filename="gcodesimpler.cpp" line="124"/>
         <source>Processing GCode...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimpler.cpp" line="183"/>
-        <source>GCode processing complete.</source>
+        <location filename="gcodesimpler.cpp" line="193"/>
+        <source>%1 GCode file(s) processing complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gcodesimpler.cpp" line="197"/>
+        <source>No file processed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -57,22 +59,20 @@
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="57"/>
-        <source>Drop GCode file here.</source>
+        <source>Drag and drop GCode file(s) here.</source>
+        <oldsource>Drop GCode file here.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="64"/>
-        <source>Processing GCode...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="gcodesimplerwidget.cpp" line="76"/>
-        <source>Destination: %1</source>
+        <source>Processing GCode file(s)...</source>
+        <oldsource>Processing GCode...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="gcodesimplerwidget.cpp" line="77"/>
-        <source>GCode processing complete.</source>
+        <source>GCode file(s) processing complete.</source>
+        <oldsource>GCode processing complete.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -81,18 +81,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="100"/>
-        <source>Multiple files is not supported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="gcodesimplerwidget.cpp" line="134"/>
-        <source>(C)2014 Shaanxi Hengtong </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="gcodesimplerwidget.cpp" line="65"/>
-        <location filename="gcodesimplerwidget.cpp" line="102"/>
         <source>Filepath: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -102,20 +91,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="128"/>
+        <location filename="gcodesimplerwidget.cpp" line="99"/>
+        <source>Now drop Gcode file(s) here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gcodesimplerwidget.cpp" line="129"/>
         <source>File not accessable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gcodesimplerwidget.cpp" line="134"/>
+        <location filename="gcodesimplerwidget.cpp" line="136"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gcodesimplerwidget.cpp" line="136"/>
+        <source>2014(C) Shaanxi Hengtong </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="28"/>
+        <location filename="main.cpp" line="30"/>
         <source>
 GCodeSimpler
 (C)2014 Shaanxi Hengtong

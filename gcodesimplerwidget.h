@@ -21,7 +21,7 @@ public:
     ~GCodeSimplerWidget();
 
 signals:
-    void fileAccepted(const QString & filepath);
+    void filesAccepted(const QStringList & filelist);
 
 public slots:
     void ready();

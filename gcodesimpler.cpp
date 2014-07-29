@@ -72,116 +72,131 @@ const QString GCodeSimpler::simplify(const QString &reference)
     return line;
 }
 
-void GCodeSimpler::processGCode(const QString &filepath)
+void GCodeSimpler::processGCode(const QStringList &filelist)
 {
-    QString gCodeFilePath = filepath;
-    consoleWrite(tr("Source file: %1").arg(gCodeFilePath));
-
-    QFile inFile(gCodeFilePath);
-    if (!inFile.open(QIODevice::Text | QIODevice::ReadOnly))
+    unsigned int filecount = 0;
+    foreach (QString filepath, filelist)
     {
-        consoleWrite(tr("Source file not accessible."));
-        return finished(false,tr("Source file not accessible."));
-    }
+        QString gCodeFilePath = filepath;
+        consoleWrite(tr("Source file: %1").arg(gCodeFilePath));
 
-    QFileInfo inFileInfo(inFile);
-    if (inFileInfo.completeSuffix() != inSuffix)
-    {
-        consoleWrite(tr("Not a GCode file."));
-        return finished(false,tr("Not a GCode file."));
-    }
-
-    QDir dir = inFileInfo.absoluteDir();
-    QFileInfo inDirInfo(dir.path());
-    if (!inDirInfo.isWritable())
-    {
-        consoleWrite(tr("Target folder not writable."));
-        return finished(false,tr("Target folder not writable."));
-    }
-
-    QDir::setCurrent(dir.path());
-    QString xj3dpFilePath = QString("%1.%2").arg(inFileInfo.baseName()).arg(outSuffix);
-    QFile outFile(xj3dpFilePath);
-    QFileInfo outFileInfo(outFile);
-
-    // NOTE: this will overwrite existing file
-    // TODO: need a auto renaming solution
-//    if (outFile.exists())
-//        return finished(false,"Target file exists.");
-
-    if (!outFile.open(/*QIODevice::Text | */QIODevice::WriteOnly))
-    {
-        consoleWrite(tr("Target file not writable."));
-        return finished(false,tr("Target file not writable."));
-    }
-
-    //everything seems ready.
-    consoleWrite(tr("Processing GCode..."));
-    emit processing(inFileInfo.absoluteFilePath());
-
-    QTextStream inStream(&inFile);
-    QTextStream outStream(&outFile);
-
-    QString inLine;
-    //QString outLine;
-    QStringList outList;
-    QStringList layerList;
-
-    QString data;
-
-    clearPosition();
-
-    // ugly code below
-    // process gcode
-
-    //TODO: refer to any GCode Parsing Library
-
-    while (!inStream.atEnd())
-    {
-        inLine = inStream.readLine();
-        if (inLine.contains("(") || inLine.contains(";") ||inLine.isEmpty())
-            continue;
-        data = simplify(inLine);
-        if (!data.isEmpty())
+        QFile inFile(gCodeFilePath);
+        if (!inFile.open(QIODevice::Text | QIODevice::ReadOnly))
         {
-            //data = line;
-            if ((z!=last_z) && (!first))
-            {
-                //layer change
-                processLayerChange(outList, layerList);
-                data_count = 0;
-                layer_count++;
-            }
-
-            data_count++;
-            layerList.append(data);
-            last_z = z;
-            first = false;
+            processingResult(false,tr("Source file not accessible."));
+            continue;
         }
-             //outStream << line << endl;
+
+        QFileInfo inFileInfo(inFile);
+        if (inFileInfo.completeSuffix() != inSuffix)
+        {
+            processingResult(false,tr("Not a GCode file."));
+            continue;
+        }
+
+        QDir dir = inFileInfo.absoluteDir();
+        QFileInfo inDirInfo(dir.path());
+        if (!inDirInfo.isWritable())
+        {
+            processingResult(false,tr("Target folder not writable."));
+            continue;
+        }
+
+        QDir::setCurrent(dir.path());
+        QString xj3dpFilePath = QString("%1.%2").arg(inFileInfo.baseName()).arg(outSuffix);
+        QFile outFile(xj3dpFilePath);
+        // QFileInfo outFileInfo(outFile);
+
+        // NOTE: this will overwrite existing file
+        // TODO: need a auto renaming solution
+        // if (outFile.exists())
+        //    return finished(false,"Target file exists.");
+
+        if (!outFile.open(/*QIODevice::Text | */QIODevice::WriteOnly))
+        {
+            consoleWrite(tr("Target file not writable."));
+            finished(false,tr("Target file not writable."));
+            inFile.close();
+            continue;
+        }
+
+        //everything seems ready.
+        consoleWrite(tr("Processing GCode..."));
+        emit processing(inFileInfo.absoluteFilePath());
+
+        QTextStream inStream(&inFile);
+        QTextStream outStream(&outFile);
+
+        QString inLine;
+        //QString outLine;
+        QStringList outList;
+        QStringList layerList;
+
+        QString data;
+
+        clearPosition();
+
+        // ugly code below
+        // process gcode
+
+        //TODO: refer to any GCode Parsing Library
+
+        while (!inStream.atEnd())
+        {
+            inLine = inStream.readLine();
+            if (inLine.contains("(") || inLine.contains(";") ||inLine.isEmpty())
+                continue;
+            data = simplify(inLine);
+            if (!data.isEmpty())
+            {
+                //data = line;
+                if ((z!=last_z) && (!first))
+                {
+                    //layer change
+                    processLayerChange(outList, layerList);
+                    data_count = 0;
+                    layer_count++;
+                }
+
+                data_count++;
+                layerList.append(data);
+                last_z = z;
+                first = false;
+            }
+                 //outStream << line << endl;
+        }
+
+        //process last layer
+        processLayerChange(outList, layerList);
+
+        // no layer_count++ at the very end so we do it right away
+        data =  QString("layers=%1").arg(QString::number(layer_count+1));
+        outList.prepend(data);
+
+        //write to file
+        //foreach is slow
+        QStringList::const_iterator it;
+        for (it = outList.begin();it != outList.end();++it)
+        {
+            outStream << *it << "\r\n";
+        }
+
+        //processing done.
+
+        inFile.close();
+        outFile.close();
+
+        filecount++;
     }
-
-    //process last layer
-    processLayerChange(outList, layerList);
-
-    // no layer_count++ at the very end so we do it right away
-    data =  QString("layers=%1").arg(QString::number(layer_count+1));
-    outList.prepend(data);
-
-    //write to file
-    //foreach is slow
-    QStringList::const_iterator it;
-    for (it = outList.begin();it != outList.end();++it)
+    if (filecount > 0)
     {
-        outStream << *it << "\r\n";
+        processingResult(true,tr("%1 GCode file(s) processing complete.").arg(QString::number(filecount)));
+    }
+    else
+    {
+        processingResult(false,tr("No file processed."));
     }
 
-    //processing done.
-
-    inFile.close();
-    outFile.close();
-    consoleWrite(tr("GCode processing complete."));
-    emit finished(true,outFileInfo.absoluteFilePath());
 }
 
 void GCodeSimpler::clearPosition()
@@ -210,3 +225,10 @@ void GCodeSimpler::consoleWrite(const QString & message)
     QTextStream out(stdout);
     out << message << endl;
 }
+
+void GCodeSimpler::processingResult(bool status, const QString &message)
+{
+    consoleWrite(message);
+    emit finished(status, message);
+}
+
