@@ -143,7 +143,6 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="30"/>
         <source>
 GCodeSimpler
 (C)2014 Shaanxi Hengtong
@@ -154,7 +153,7 @@ Options:
 --help			-h		Display this help
 --convert &lt;filepath&gt;	-c &lt;filepath&gt;	Process GCode file
 </source>
-        <translation>
+        <translation type="obsolete">
 GCode转换器
 2014 陕西恒通智能机器有限公司 版权所有
 =======================
@@ -164,6 +163,32 @@ GCode转换器
 --help			-h		显示帮助信息
 --convert &lt;filepath&gt;	-c &lt;filepath&gt;	转换GCode文件
 </translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="12"/>
+        <source>
+GCodeSimpler
+(C)2014 Shaanxi Hengtong
+</source>
+        <translation>
+GCode转换器
+2014 陕西恒通智能机器有限公司 版权所有</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="32"/>
+        <source>=======================
+
+Usage: GcodeSimpler [OPTION] [FILE]
+Options:
+--help			-h		Display this help
+--convert &lt;filepath&gt;	-c &lt;filepath&gt;	Process GCode file
+</source>
+        <translation>=======================
+
+用法: GcodeSimpler [选项] [文件名]
+选项:
+--help			-h		显示帮助信息
+--convert &lt;filepath&gt;	-c &lt;filepath&gt;	转换GCode文件</translation>
     </message>
 </context>
 </TS>

@@ -114,11 +114,16 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="30"/>
+        <location filename="main.cpp" line="12"/>
         <source>
 GCodeSimpler
 (C)2014 Shaanxi Hengtong
-=======================
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="32"/>
+        <source>=======================
 
 Usage: GcodeSimpler [OPTION] [FILE]
 Options:
