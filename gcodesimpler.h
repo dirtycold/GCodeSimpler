@@ -4,7 +4,7 @@
 #include <QObject>
 
 static const QString inSuffix  = "gcode";
-static const QString outSuffix = "xj3dp1";
+static const QString outSuffix = "xj3dp";
 
 class GCodeSimpler : public QObject
 {
