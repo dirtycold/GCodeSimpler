@@ -12,7 +12,7 @@
 #include <QStyle>
 #include <QApplication>
 
-static const quint16 notifyDelay = 1000;
+static const quint16 notifyDelay = 2500;
 
 GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     : QWidget(parent)
@@ -76,7 +76,7 @@ void GCodeSimplerWidget::finished(bool status, const QString &message)
         infoLabel.setText(message);
         statusLabel.setText(QString("<h2 align=center>%1</h2>\n<p align=center>%2</p>").arg(tr("GCode file(s) processing complete.")).arg(tr("The output was in the same folder.")));
         //ready
-        QTimer::singleShot(notifyDelay * 2,this,SLOT(ready()));
+        QTimer::singleShot(notifyDelay,this,SLOT(ready()));
     }
     else
     {
