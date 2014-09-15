@@ -13,4 +13,4 @@ The improvement to the former was focused on UI and output format.
 
 Screenshot
 ======
-![GCodeSimpler](docs/GCodeSimpler.png)
+![GCodeSimpler](http://wstaw.org/m/2014/09/15/GCodeSimpler.png)
