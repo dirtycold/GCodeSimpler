@@ -25,9 +25,10 @@ GCodeSimplerWidget::GCodeSimplerWidget(QWidget *parent)
     vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
-    setFixedSize(400,360);
+    //setFixedSize(400,360);
+    resize(480,480);
     infoLabel.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
-    aboutButton.setFixedSize(28,28);
+//    aboutButton.setFixedSize(28,28);
     aboutButton.setFlat(true);
     aboutButton.setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation)));
 
